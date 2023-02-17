@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GESTION_ MIFA", "GESTION_ MIFA\GESTION_ MIFA.csproj", "{157FC1AA-342A-459A-B380-B649511983EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{157FC1AA-342A-459A-B380-B649511983EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{157FC1AA-342A-459A-B380-B649511983EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{157FC1AA-342A-459A-B380-B649511983EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{157FC1AA-342A-459A-B380-B649511983EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D75D216-8866-4544-8478-99BFA06C65E0}
+	EndGlobalSection
+EndGlobal

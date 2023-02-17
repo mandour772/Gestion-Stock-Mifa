@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bafe7703872947a583585577d0d76dac" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="Gestion_stock_mifaModel.categorie" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Gestion_stock_mifaModel.client" Width="1.5" PointX="0.875" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Gestion_stock_mifaModel.commande" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Gestion_stock_mifaModel.livraison" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Gestion_stock_mifaModel.produit" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Gestion_stock_mifaModel.utilisateur" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="Gestion_stock_mifaModel.FK__produit__idcateg__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="Gestion_stock_mifaModel.FK__commande__idclie__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="Gestion_stock_mifaModel.FK__livraison__idc__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="Gestion_stock_mifaModel.FK__livraison__idcom__1CF15040" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

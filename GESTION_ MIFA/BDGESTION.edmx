@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Gestion_stock_mifaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="categorie">
+          <Key>
+            <PropertyRef Name="idcategorie" />
+          </Key>
+          <Property Name="idcategorie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomcategorie" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="idc" />
+          </Key>
+          <Property Name="idc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomc" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="prenom" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="telephone" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="commande">
+          <Key>
+            <PropertyRef Name="idcommande" />
+          </Key>
+          <Property Name="idcommande" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datecommande" Type="date" Nullable="false" />
+          <Property Name="idclient" Type="int" Nullable="false" />
+          <Property Name="totalht" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="livraison">
+          <Key>
+            <PropertyRef Name="idlivraison" />
+          </Key>
+          <Property Name="idlivraison" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adresse" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="idcom" Type="int" Nullable="false" />
+          <Property Name="datelivraison" Type="date" Nullable="false" />
+          <Property Name="idc" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="idproduit" />
+          </Key>
+          <Property Name="idproduit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomp" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="prix" Type="float" Nullable="false" />
+          <Property Name="idcategorie" Type="int" Nullable="false" />
+          <Property Name="quantite" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'Gestion_stock_mifa.dbo.utilisateur' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="nom_utilisateur" />
+            <PropertyRef Name="mot_passe" />
+          </Key>
+          <Property Name="nom_utilisateur" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="mot_passe" Type="varchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__commande__idclie__1A14E395">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="commande" Type="Self.commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idc" />
+            </Principal>
+            <Dependent Role="commande">
+              <PropertyRef Name="idclient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__livraison__idc__1DE57479">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="livraison" Type="Self.livraison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idc" />
+            </Principal>
+            <Dependent Role="livraison">
+              <PropertyRef Name="idc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__livraison__idcom__1CF15040">
+          <End Role="commande" Type="Self.commande" Multiplicity="1" />
+          <End Role="livraison" Type="Self.livraison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commande">
+              <PropertyRef Name="idcommande" />
+            </Principal>
+            <Dependent Role="livraison">
+              <PropertyRef Name="idcom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__produit__idcateg__173876EA">
+          <End Role="categorie" Type="Self.categorie" Multiplicity="1" />
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorie">
+              <PropertyRef Name="idcategorie" />
+            </Principal>
+            <Dependent Role="produit">
+              <PropertyRef Name="idcategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Gestion_stock_mifaModelStoreContainer">
+          <EntitySet Name="categorie" EntityType="Self.categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="commande" EntityType="Self.commande" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="livraison" EntityType="Self.livraison" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produit" EntityType="Self.produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="utilisateur" EntityType="Self.utilisateur" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [utilisateur].[nom_utilisateur] AS [nom_utilisateur], 
+    [utilisateur].[mot_passe] AS [mot_passe]
+    FROM [dbo].[utilisateur] AS [utilisateur]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__commande__idclie__1A14E395" Association="Self.FK__commande__idclie__1A14E395">
+            <End Role="client" EntitySet="client" />
+            <End Role="commande" EntitySet="commande" />
+          </AssociationSet>
+          <AssociationSet Name="FK__livraison__idc__1DE57479" Association="Self.FK__livraison__idc__1DE57479">
+            <End Role="client" EntitySet="client" />
+            <End Role="livraison" EntitySet="livraison" />
+          </AssociationSet>
+          <AssociationSet Name="FK__livraison__idcom__1CF15040" Association="Self.FK__livraison__idcom__1CF15040">
+            <End Role="commande" EntitySet="commande" />
+            <End Role="livraison" EntitySet="livraison" />
+          </AssociationSet>
+          <AssociationSet Name="FK__produit__idcateg__173876EA" Association="Self.FK__produit__idcateg__173876EA">
+            <End Role="categorie" EntitySet="categorie" />
+            <End Role="produit" EntitySet="produit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Gestion_stock_mifaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="categorie">
+          <Key>
+            <PropertyRef Name="idcategorie" />
+          </Key>
+          <Property Name="idcategorie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomcategorie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="produits" Relationship="Self.FK__produit__idcateg__173876EA" FromRole="categorie" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="idc" />
+          </Key>
+          <Property Name="idc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomc" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telephone" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="commandes" Relationship="Self.FK__commande__idclie__1A14E395" FromRole="client" ToRole="commande" />
+          <NavigationProperty Name="livraisons" Relationship="Self.FK__livraison__idc__1DE57479" FromRole="client" ToRole="livraison" />
+        </EntityType>
+        <EntityType Name="commande">
+          <Key>
+            <PropertyRef Name="idcommande" />
+          </Key>
+          <Property Name="idcommande" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datecommande" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idclient" Type="Int32" Nullable="false" />
+          <Property Name="totalht" Type="Double" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.FK__commande__idclie__1A14E395" FromRole="commande" ToRole="client" />
+          <NavigationProperty Name="livraisons" Relationship="Self.FK__livraison__idcom__1CF15040" FromRole="commande" ToRole="livraison" />
+        </EntityType>
+        <EntityType Name="livraison">
+          <Key>
+            <PropertyRef Name="idlivraison" />
+          </Key>
+          <Property Name="idlivraison" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adresse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idcom" Type="Int32" Nullable="false" />
+          <Property Name="datelivraison" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idc" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.FK__livraison__idc__1DE57479" FromRole="livraison" ToRole="client" />
+          <NavigationProperty Name="commande" Relationship="Self.FK__livraison__idcom__1CF15040" FromRole="livraison" ToRole="commande" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="idproduit" />
+          </Key>
+          <Property Name="idproduit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomp" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prix" Type="Double" Nullable="false" />
+          <Property Name="idcategorie" Type="Int32" Nullable="false" />
+          <Property Name="quantite" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categorie" Relationship="Self.FK__produit__idcateg__173876EA" FromRole="produit" ToRole="categorie" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="nom_utilisateur" />
+            <PropertyRef Name="mot_passe" />
+          </Key>
+          <Property Name="nom_utilisateur" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mot_passe" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__produit__idcateg__173876EA">
+          <End Role="categorie" Type="Self.categorie" Multiplicity="1" />
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorie">
+              <PropertyRef Name="idcategorie" />
+            </Principal>
+            <Dependent Role="produit">
+              <PropertyRef Name="idcategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__commande__idclie__1A14E395">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="commande" Type="Self.commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idc" />
+            </Principal>
+            <Dependent Role="commande">
+              <PropertyRef Name="idclient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__livraison__idc__1DE57479">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="livraison" Type="Self.livraison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="idc" />
+            </Principal>
+            <Dependent Role="livraison">
+              <PropertyRef Name="idc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__livraison__idcom__1CF15040">
+          <End Role="commande" Type="Self.commande" Multiplicity="1" />
+          <End Role="livraison" Type="Self.livraison" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commande">
+              <PropertyRef Name="idcommande" />
+            </Principal>
+            <Dependent Role="livraison">
+              <PropertyRef Name="idcom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Gestion_stock_mifaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="Self.categorie" />
+          <EntitySet Name="clients" EntityType="Self.client" />
+          <EntitySet Name="commandes" EntityType="Self.commande" />
+          <EntitySet Name="livraisons" EntityType="Self.livraison" />
+          <EntitySet Name="produits" EntityType="Self.produit" />
+          <EntitySet Name="utilisateurs" EntityType="Self.utilisateur" />
+          <AssociationSet Name="FK__produit__idcateg__173876EA" Association="Self.FK__produit__idcateg__173876EA">
+            <End Role="categorie" EntitySet="categories" />
+            <End Role="produit" EntitySet="produits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__commande__idclie__1A14E395" Association="Self.FK__commande__idclie__1A14E395">
+            <End Role="client" EntitySet="clients" />
+            <End Role="commande" EntitySet="commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__livraison__idc__1DE57479" Association="Self.FK__livraison__idc__1DE57479">
+            <End Role="client" EntitySet="clients" />
+            <End Role="livraison" EntitySet="livraisons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__livraison__idcom__1CF15040" Association="Self.FK__livraison__idcom__1CF15040">
+            <End Role="commande" EntitySet="commandes" />
+            <End Role="livraison" EntitySet="livraisons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Gestion_stock_mifaModelStoreContainer" CdmEntityContainer="Gestion_stock_mifaEntities">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="Gestion_stock_mifaModel.categorie">
+              <MappingFragment StoreEntitySet="categorie">
+                <ScalarProperty Name="idcategorie" ColumnName="idcategorie" />
+                <ScalarProperty Name="nomcategorie" ColumnName="nomcategorie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="Gestion_stock_mifaModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="idc" ColumnName="idc" />
+                <ScalarProperty Name="nomc" ColumnName="nomc" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="commandes">
+            <EntityTypeMapping TypeName="Gestion_stock_mifaModel.commande">
+              <MappingFragment StoreEntitySet="commande">
+                <ScalarProperty Name="idcommande" ColumnName="idcommande" />
+                <ScalarProperty Name="datecommande" ColumnName="datecommande" />
+                <ScalarProperty Name="idclient" ColumnName="idclient" />
+                <ScalarProperty Name="totalht" ColumnName="totalht" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="livraisons">
+            <EntityTypeMapping TypeName="Gestion_stock_mifaModel.livraison">
+              <MappingFragment StoreEntitySet="livraison">
+                <ScalarProperty Name="idlivraison" ColumnName="idlivraison" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="idcom" ColumnName="idcom" />
+                <ScalarProperty Name="datelivraison" ColumnName="datelivraison" />
+                <ScalarProperty Name="idc" ColumnName="idc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produits">
+            <EntityTypeMapping TypeName="Gestion_stock_mifaModel.produit">
+              <MappingFragment StoreEntitySet="produit">
+                <ScalarProperty Name="idproduit" ColumnName="idproduit" />
+                <ScalarProperty Name="nomp" ColumnName="nomp" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="idcategorie" ColumnName="idcategorie" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="utilisateurs">
+            <EntityTypeMapping TypeName="Gestion_stock_mifaModel.utilisateur">
+              <MappingFragment StoreEntitySet="utilisateur">
+                <ScalarProperty Name="nom_utilisateur" ColumnName="nom_utilisateur" />
+                <ScalarProperty Name="mot_passe" ColumnName="mot_passe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
